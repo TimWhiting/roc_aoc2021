@@ -62,3 +62,5 @@ main =
 #         lines -> 
 #             newLines = process lines
 #             Stdout.line "success"
+
+    Stdout.line "done"
