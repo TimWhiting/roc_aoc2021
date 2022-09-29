@@ -1,9 +1,9 @@
 [package]
 name = "host"
-version = "0.1.0"
+version = "0.0.1"
 authors = ["The Roc Contributors"]
 license = "UPL-1.0"
-edition = "2018"
+edition = "2021"
 
 links = "app"
 
@@ -17,7 +17,8 @@ name = "host"
 path = "src/main.rs"
 
 [dependencies]
-roc_std = { path = "../../roc/roc_std" }
+roc_std = { path = "../../roc/crates/roc_std" }
 libc = "0.2"
+reqwest = { version="0.11.11", default-features=false, features=["blocking", "rustls-tls"] }
 
 [workspace]

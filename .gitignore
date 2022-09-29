@@ -1,3 +1,9 @@
 *.o
 *.lock
 platform/target/
+cli-platform/target
+aoc-day1
+*.so
+preprocessedhost
+dynhost
+metadata

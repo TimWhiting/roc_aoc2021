@@ -1,8 +1,8 @@
 #!/usr/bin/env roc
 
 app "aoc-day1"
-    packages { base: "platform" }
-    imports [ base.Task.{succeed, await}, base.Stdout ]
+    packages { base: "cli-platform/main.roc" }
+    imports [ base.Task.{succeed, await, Task}, base.Stdout, base.Program.{ Program, ExitCode } ]
     provides [ main ] to base
 
 
@@ -14,10 +14,10 @@ test : Aggr, Nat -> Aggr
 test = \state, elem ->
         when Triple state.first state.second state.third is 
             Triple (Some first) (Some second) (Some third) ->
-              if  elem + second + third > first + second + third then
-                  { numItems: state.numItems + 1, first: Some second, second: Some third, third: Some elem}
-              else
-                  { state & first: Some second, second: Some third, third: Some elem }
+                if  elem + second + third > first + second + third then
+                    { numItems: state.numItems + 1, first: Some second, second: Some third, third: Some elem}
+                else
+                    { state & first: Some second, second: Some third, third: Some elem }
             Triple _ second third ->
                 { state & first: second, second: third, third: Some elem }
         
@@ -53,13 +53,16 @@ part1 =
 
     Stdout.line x
 
-main =
+main = Program.noArgs mainTask
+
+mainTask: Task ExitCode [] [Write [Stdout]]
+mainTask = 
     _ <- await (succeed {})
-    
     _ <- await (Stdout.line "part1")
     _ <- await (part1)
 
     _ <- await (Stdout.line "part2")
     _ <- await (part2)
 
-    Stdout.line "done"
+    _ <- (Stdout.line "done") |> Program.exit 1
+
